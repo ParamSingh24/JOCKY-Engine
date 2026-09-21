@@ -29,3 +29,15 @@ export interface NetworkPortTelemetry {
   bytesSent: string;
   bytesRecv: string;
 }
+
+export interface RegistryPersistenceTelemetry {
+  hive: 'HKLM' | 'HKCU' | 'HKCR';
+  keyPath: string;
+  valueName: string;
+  valueType: string;
+  data: string;
+  classification: string;
+  mitreId: string;
+  severity: 'CRITICAL' | 'HIGH' | 'ELEVATED' | 'MEDIUM' | 'LOW';
+  lastModified: string;
+}
