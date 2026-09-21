@@ -13,3 +13,19 @@ export interface ProcessTelemetry {
   sha256: string;
   threatLevel: 'CLEAN' | 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
 }
+
+export interface NetworkPortTelemetry {
+  protocol: 'TCP' | 'UDP';
+  localAddress: string;
+  localPort: number;
+  foreignAddress: string;
+  foreignPort: number;
+  state: 'LISTENING' | 'ESTABLISHED' | 'ACTIVE' | 'TIME_WAIT' | 'CLOSE_WAIT';
+  pid: number;
+  processName: string;
+  service: string;
+  risk: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | 'VERIFIED_SECURE';
+  country: string;
+  bytesSent: string;
+  bytesRecv: string;
+}
