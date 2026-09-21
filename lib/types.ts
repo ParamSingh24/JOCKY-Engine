@@ -41,3 +41,48 @@ export interface RegistryPersistenceTelemetry {
   severity: 'CRITICAL' | 'HIGH' | 'ELEVATED' | 'MEDIUM' | 'LOW';
   lastModified: string;
 }
+
+export interface ExtractionEventLog {
+  id: string;
+  timestamp: string;
+  title: string;
+  status: string;
+  details: string;
+  color: 'emerald' | 'amber' | 'rose' | 'cyan' | 'zinc';
+  batchId?: string;
+}
+
+export interface HostInfo {
+  hostname: string;
+  os: string;
+  kernelBase: string;
+  integrityLevel: string;
+  activeSession: string;
+  sysCallMethod: string;
+  driverStatus: string;
+}
+
+export interface TelemetryBatch {
+  batchId: string;
+  engineVersion: string;
+  timestamp: string;
+  hostInfo: HostInfo;
+  statistics: {
+    processesAnalyzed: number;
+    openSockets: number;
+    persistenceKeys: number;
+    totalThreats: number;
+    extractionLatencyMs: number;
+  };
+  telemetry: {
+    processes: ProcessTelemetry[];
+    ports: NetworkPortTelemetry[];
+    persistence: RegistryPersistenceTelemetry[];
+  };
+  logEvent?: {
+    title: string;
+    status: string;
+    details: string;
+    color: 'emerald' | 'amber' | 'rose' | 'cyan' | 'zinc';
+  };
+}
