@@ -363,5 +363,3 @@ export function subscribeTelemetry(listener: (data: any) => void) {
     telemetryStore.listeners.delete(listener);
   };
 }
-
-// In-memory ring buffer optimized for high-throughput forensic streams
