@@ -58,5 +58,67 @@ const initialProcesses: ProcessTelemetry[] = [
     anomaly: "EncodedCommand detected with base64 download cradle (-w hidden -nop)",
     sha256: "3a7bd3e2360a3d29eea436fcfb7e44c735d117c42d1c1835420b6b9942dd4f1b",
     threatLevel: "HIGH"
+  },
+  {
+    pid: 6128,
+    ppid: 780,
+    name: "spoolsv.exe",
+    path: "C:\\Windows\\System32\\spoolsv.exe",
+    user: "NT AUTHORITY\\SYSTEM",
+    integrity: "SYSTEM",
+    threads: 22,
+    memoryBase: "0x7FF619A00000",
+    memorySize: "14.1 MB",
+    status: "NORMAL",
+    anomaly: "Print Spooler service baseline nominal",
+    sha256: "5c92da90a14e9f3b259d3a778e1208fb347c6a99214810eeaf1288c934b12aa3",
+    threatLevel: "CLEAN"
+  }
+];
+
+const initialPorts: NetworkPortTelemetry[] = [
+  {
+    protocol: "TCP",
+    localAddress: "0.0.0.0",
+    localPort: 4444,
+    foreignAddress: "194.26.29.112",
+    foreignPort: 53530,
+    state: "ESTABLISHED",
+    pid: 8412,
+    processName: "svchost.exe",
+    service: "CobaltStrike Beacon / Meterpreter Listener",
+    risk: "CRITICAL",
+    country: "RO",
+    bytesSent: "2,419,008 B",
+    bytesRecv: "512,400 B"
+  },
+  {
+    protocol: "TCP",
+    localAddress: "127.0.0.1",
+    localPort: 9050,
+    foreignAddress: "0.0.0.0",
+    foreignPort: 0,
+    state: "LISTENING",
+    pid: 14088,
+    processName: "rundll32.exe",
+    service: "SOCKS5 Proxy / TOR Hidden Gateway",
+    risk: "HIGH",
+    country: "LOOPBACK",
+    bytesSent: "0 B",
+    bytesRecv: "0 B"
+  }
+];
+
+const initialPersistence: RegistryPersistenceTelemetry[] = [
+  {
+    hive: "HKLM",
+    keyPath: "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+    valueName: "WindowsSecurityTelemetryHost",
+    valueType: "REG_SZ",
+    data: "C:\\ProgramData\\WindowsDiagnostics\\telemetry_agent.exe --silent --kernel-hook",
+    classification: "MALICIOUS_PERSISTENCE",
+    mitreId: "T1547.001",
+    severity: "CRITICAL",
+    lastModified: "2026-09-25 15:42:10 UTC"
   }
 ];
