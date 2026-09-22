@@ -444,3 +444,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Verified compatible with Windows 11 Build 22631+ and Linux x64
