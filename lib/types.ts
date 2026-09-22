@@ -86,3 +86,5 @@ export interface TelemetryBatch {
     color: 'emerald' | 'amber' | 'rose' | 'cyan' | 'zinc';
   };
 }
+
+// Types exported for forensic agent interoperability
