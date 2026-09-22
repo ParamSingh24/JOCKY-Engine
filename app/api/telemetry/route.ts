@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getTelemetrySnapshot } from '@/lib/telemetryStore';
+import { addTelemetryBatch, getTelemetrySnapshot } from '@/lib/telemetryStore';
+import { TelemetryBatch } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +15,41 @@ export async function GET() {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({
+      success: false,
+      error: message
+    }, { status: 500 });
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body: TelemetryBatch = await request.json();
+
+    if (!body || !body.telemetry) {
+      return NextResponse.json({
+        success: false,
+        error: "Invalid telemetry payload structure: missing 'telemetry' object"
+      }, { status: 400 });
+    }
+
+    const updated = addTelemetryBatch(body);
+
+    return NextResponse.json({
+      success: true,
+      message: "Telemetry ingested successfully into JOCKY Engine kernel store",
+      batchId: body.batchId || "UNKNOWN",
+      syncedCounts: {
+        processes: updated.processes.length,
+        ports: updated.ports.length,
+        persistence: updated.persistence.length,
+      },
+      timestamp: new Date().toISOString()
+    }, { status: 200 });
+
+  } catch (error) {
+    console.error("[JOCKY-API] Error ingesting telemetry:", error);
+    const message = error instanceof Error ? error.message : "Internal server error processing forensic telemetry";
     return NextResponse.json({
       success: false,
       error: message
