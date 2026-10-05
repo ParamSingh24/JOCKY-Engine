@@ -1,0 +1,22 @@
+# JOCKY Forensic Scripting Language (v4.9.2)
+# Incident Response & Live Telemetry Definition
+
+[TARGET_CONFIG]
+TARGET_SYSTEM       = "LOCAL_HOST_WIN64"
+PRIVILEGE_POLICY    = "SE_DEBUG_PRIVILEGE_ACQUIRED"
+DISPATCH_ENDPOINT   = "http://localhost:3000/api/telemetry"
+TRANSMISSION_MODE   = "REALTIME_HTTP_STREAM"
+
+[FORENSIC_PIPELINE]
+# Directive 1: Low-level process & VAD region mapping
+INSPECT_PROCESSES   --resolve-ssn --integrity-filter=ALL --hash-binaries=SHA256
+
+# Directive 2: Active TCP/UDP socket & C2 beacon inspection
+INSPECT_SOCKETS     --protocols=TCP,UDP --resolve-endpoints --track-bytes
+
+# Directive 3: Registry persistence vectors & MITRE ATT&CK mapping
+INSPECT_PERSISTENCE --hives=HKLM,HKCU --vectors=RUN,RUNONCE,WINLOGON,IFEO,PROFILER
+
+[EMISSION_DIRECTIVE]
+SERIALIZE_PAYLOAD   --format=FORENSIC_JSON_V4
+DISPATCH_STREAM     --destination=LOCAL_C2_LISTENER
